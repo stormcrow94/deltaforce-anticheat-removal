@@ -167,11 +167,6 @@ Encerrando processo: BEService
 ========================================
 ```
 
-## 🔄 Atualizações
-
-Para a versão mais recente, visite:
-https://github.com/[seu-usuario]/deltaforce-anticheat-removal
-
 ## 📝 Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para:
