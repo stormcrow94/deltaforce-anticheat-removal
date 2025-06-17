@@ -18,8 +18,11 @@ Write-Host ""
 $antiCheats = @(
     @{Name="BattlEye"; Service="BEService"; Driver="BEDaisy.sys"},
     @{Name="EasyAntiCheat"; Service="EasyAntiCheat"; Driver="EasyAntiCheat.sys"},
+    @{Name="EasyAntiCheat_EOS"; Service="EasyAntiCheat_EOS"; Driver="EasyAntiCheat_EOS.sys"},
     @{Name="Riot Vanguard"; Service="vgc"; Driver="vgc.sys"},
-    @{Name="Riot Vanguard Kernel"; Service="vgk"; Driver="vgk.sys"}
+    @{Name="Riot Vanguard Kernel"; Service="vgk"; Driver="vgk.sys"},
+    @{Name="ACE-Guard"; Service="ACE-Guard"; Driver="ACE-Guard.sys"},
+    @{Name="nProtect GameGuard"; Service="npggsvc"; Driver="npggsvc.sys"}
 )
 
 # Função para parar e remover serviços
@@ -66,16 +69,24 @@ $directories = @(
     "$env:ProgramData\BattlEye",
     "$env:ProgramData\EasyAntiCheat",
     "$env:ProgramData\Riot Vanguard",
+    "$env:ProgramData\ACE-Guard",
+    "$env:ProgramData\GameGuard",
     "$env:ProgramFiles\BattlEye",
     "$env:ProgramFiles\EasyAntiCheat",
     "$env:ProgramFiles\Riot Vanguard",
+    "$env:ProgramFiles\Common Files\EasyAntiCheat",
+    "$env:ProgramFiles\Delta Force",
     "${env:ProgramFiles(x86)}\BattlEye",
     "${env:ProgramFiles(x86)}\EasyAntiCheat",
+    "${env:ProgramFiles(x86)}\Common Files\EasyAntiCheat",
+    "${env:ProgramFiles(x86)}\Delta Force",
     "$env:CommonProgramFiles\BattlEye",
     "$env:CommonProgramFiles\EasyAntiCheat",
     "$env:LOCALAPPDATA\BattlEye",
     "$env:LOCALAPPDATA\EasyAntiCheat",
-    "$env:APPDATA\EasyAntiCheat"
+    "$env:LOCALAPPDATA\ACE-Guard",
+    "$env:APPDATA\EasyAntiCheat",
+    "$env:APPDATA\ACE-Guard"
 )
 
 foreach ($dir in $directories) {
@@ -109,7 +120,7 @@ foreach ($key in $registryKeys) {
 
 # 5. Procura e remove processos em execução
 Write-Host "`n[5/7] Verificando processos em execução..." -ForegroundColor Green
-$processes = @("BEService", "EasyAntiCheat", "vgtray", "vgc", "vgk")
+$processes = @("BEService", "EasyAntiCheat", "EasyAntiCheat_EOS", "vgtray", "vgc", "vgk", "ACE-Guard", "GameMon", "GameGuard")
 foreach ($proc in $processes) {
     $runningProc = Get-Process -Name $proc -ErrorAction SilentlyContinue
     if ($runningProc) {
@@ -150,5 +161,5 @@ Write-Host "2. Execute 'sfc /scannow' para verificar integridade do sistema" -Fo
 Write-Host "3. Use o Limpador de Disco do Windows" -ForegroundColor White
 Write-Host "4. Verifique o Gerenciador de Dispositivos por drivers ocultos" -ForegroundColor White
 
-Write-Host "`nPressione qualquer tecla para sair..." -ForegroundColor Gray
-$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+Write-Host "`nPressione Enter para sair..." -ForegroundColor Gray
+Read-Host
